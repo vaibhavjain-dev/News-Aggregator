@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { db } from './adapter'
 
 const app = new Hono()
 
