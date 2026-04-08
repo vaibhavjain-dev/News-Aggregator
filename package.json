@@ -1,0 +1,12 @@
+{
+  "name": "news-aggregator",
+  "scripts": {
+    "dev": "bun run --hot server/index.ts"
+  },
+  "dependencies": {
+    "hono": "^4.12.12"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
