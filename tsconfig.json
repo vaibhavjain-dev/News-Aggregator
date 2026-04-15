@@ -30,7 +30,7 @@
     // TypeScript paths
     "paths": {
       "@/shared/*": [
-        "./shared/*"
+        "./Shared/*"
       ],
       "@/*": [
         "./server/*"
