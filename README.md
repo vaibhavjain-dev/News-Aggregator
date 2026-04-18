@@ -2,7 +2,7 @@
 
 A backend API server for a News Aggregator application built with modern TypeScript tooling.
 
-> **Current Version:** v0.4 (4th commit) — Auth system complete & tested.
+> **Current Version:** v0.5 (5th commit) — Database schemas for posts, comments & upvotes.
 
 ---
 
@@ -33,7 +33,10 @@ News-Aggregator/
 │   ├── lucia.ts              # Lucia auth instance & type declarations
 │   ├── db/
 │   │   └── schemas/
-│   │       └── auth.ts       # User & Session table schemas (Drizzle)
+│   │       ├── auth.ts       # User & Session table schemas
+│   │       ├── posts.ts      # Posts table & relations
+│   │       ├── comments.ts   # Comments table & relations (self-referencing)
+│   │       └── upvotes.ts    # Post & Comment upvote tables & relations
 │   ├── Middleware/
 │   │   └── loggedIn.ts       # Auth guard middleware
 │   └── routes/
@@ -47,7 +50,9 @@ News-Aggregator/
 
 ---
 
-## ✅ What's Been Done (v0.4)
+## ✅ What's Been Done
+
+### v0.4 — Auth System
 
 - **Project scaffolding** — Bun + Hono + TypeScript setup with path aliases (`@/*` → `./server/*`).
 - **Database** — PostgreSQL running in Docker with Drizzle ORM for schema management.
@@ -59,6 +64,15 @@ News-Aggregator/
 - **Password hashing** — Using `Bun.password.hash()` (Argon2) for secure password storage.
 - **Global error handler** — Catches `HTTPException` errors and generic errors, returns consistent JSON responses, and hides stack traces in production.
 - **CORS** enabled for cross-origin requests.
+
+### v0.5 — Database Schemas & Relations
+
+- **Posts table** — `id`, `user_id`, `title`, `url`, `content`, `points`, `comment_count`, `created_at`.
+- **Comments table** — `id`, `user_id`, `post_id`, `parent_comment_id`, `content`, `depth`, `comment_count`, `points`, `created_at`. Supports nested/threaded comments via self-referencing relation.
+- **Post upvotes table** — `id`, `user_id`, `post_id`, `created_at`.
+- **Comment upvotes table** — `id`, `user_id`, `comment_id`, `created_at`.
+- **Drizzle relations** — All tables connected with proper `one`/`many` relations (author, post↔comments, post↔upvotes, comment↔upvotes, parent↔child comments).
+- **Adapter updated** — All schemas and relations registered in the Drizzle instance.
 
 ---
 
